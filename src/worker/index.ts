@@ -19,6 +19,17 @@ import {
   CreateAISuggestionRequestSchema,
 } from "@/shared/types";
 
+// Define the environment type
+interface Env {
+  DB: any; // Using 'any' to avoid Cloudflare-specific type dependency
+  JWT_SECRET: string;
+  MOCHA_USERS_SERVICE_API_URL: string;
+  MOCHA_USERS_SERVICE_API_KEY: string;
+  A4F_API_KEY: string;
+  A4F_API_BASE: string;
+  OPENAI_API_KEY: string;
+}
+
 
 
 // Custom auth middleware for our new system
