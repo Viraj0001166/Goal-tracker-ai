@@ -1,0 +1,24 @@
+
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  email TEXT UNIQUE,
+  phone TEXT UNIQUE,
+  password_hash TEXT,
+  name TEXT,
+  profile_image TEXT,
+  is_email_verified BOOLEAN DEFAULT 0,
+  is_phone_verified BOOLEAN DEFAULT 0,
+  google_id TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE otp_verifications (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  phone TEXT NOT NULL,
+  otp_code TEXT NOT NULL,
+  is_verified BOOLEAN DEFAULT 0,
+  expires_at DATETIME NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
