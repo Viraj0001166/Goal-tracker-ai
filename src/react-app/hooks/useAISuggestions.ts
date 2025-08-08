@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { AISuggestion, CreateAISuggestionRequest } from '@/shared/types';
+import API_ENDPOINTS from '../config/api';
 import toast from 'react-hot-toast';
 
 export function useAISuggestions() {
@@ -11,7 +12,7 @@ export function useAISuggestions() {
       setLoading(true);
       setError(null);
       
-      const response = await fetch('/api/ai-suggestions', {
+      const response = await fetch(API_ENDPOINTS.AI_SUGGESTIONS, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -37,7 +38,7 @@ export function useAISuggestions() {
 
   const getRecentSuggestions = async (): Promise<AISuggestion[]> => {
     try {
-      const response = await fetch('/api/ai-suggestions/recent');
+      const response = await fetch(API_ENDPOINTS.AI_SUGGESTIONS_RECENT);
       if (!response.ok) {
         throw new Error('Failed to fetch recent suggestions');
       }

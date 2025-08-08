@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import API_ENDPOINTS from '../config/api';
 import toast from 'react-hot-toast';
 
 export function useChat() {
@@ -10,7 +11,7 @@ export function useChat() {
       setLoading(true);
       setError(null);
       
-      const response = await fetch('/api/chat', {
+      const response = await fetch(API_ENDPOINTS.CHAT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

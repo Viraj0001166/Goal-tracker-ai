@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { DailyLog, CreateDailyLog, UpdateDailyLog } from '@/shared/types';
+import { DailyLog } from '@/shared/types';
+import API_ENDPOINTS from '../config/api';
 import toast from 'react-hot-toast';
 
 export function useDailyLogs(date?: string) {
@@ -10,7 +11,7 @@ export function useDailyLogs(date?: string) {
   const fetchLogs = async () => {
     try {
       setLoading(true);
-      const url = date ? `/api/daily-logs?date=${date}` : '/api/daily-logs';
+      const url = date ? `${API_ENDPOINTS.DAILY_LOGS}?date=${date}` : API_ENDPOINTS.DAILY_LOGS;
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error('Failed to fetch daily logs');
@@ -27,9 +28,9 @@ export function useDailyLogs(date?: string) {
     }
   };
 
-  const createOrUpdateLog = async (logData: CreateDailyLog) => {
+  const createOrUpdateLog = async (logData: Partial<DailyLog>) => {
     try {
-      const response = await fetch('/api/daily-logs', {
+      const response = await fetch(API_ENDPOINTS.DAILY_LOGS, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -66,9 +67,9 @@ export function useDailyLogs(date?: string) {
     }
   };
 
-  const updateLog = async (logData: UpdateDailyLog) => {
+  const updateLog = async (logData: Partial<DailyLog>) => {
     try {
-      const response = await fetch(`/api/daily-logs/${logData.id}`, {
+      const response = await fetch(`${API_ENDPOINTS.DAILY_LOGS}/${logData.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

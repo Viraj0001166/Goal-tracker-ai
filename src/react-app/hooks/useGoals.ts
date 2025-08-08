@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Goal, CreateGoal, UpdateGoal } from '@/shared/types';
+import { Goal } from '@/shared/types';
+import API_ENDPOINTS from '../config/api';
 import toast from 'react-hot-toast';
 
 export function useGoals() {
@@ -10,7 +11,7 @@ export function useGoals() {
   const fetchGoals = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/goals');
+      const response = await fetch(API_ENDPOINTS.GOALS);
       if (!response.ok) {
         throw new Error('Failed to fetch goals');
       }
@@ -26,9 +27,9 @@ export function useGoals() {
     }
   };
 
-  const createGoal = async (goalData: CreateGoal) => {
+  const createGoal = async (goalData: Partial<Goal>) => {
     try {
-      const response = await fetch('/api/goals', {
+      const response = await fetch(API_ENDPOINTS.GOALS, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -51,9 +52,9 @@ export function useGoals() {
     }
   };
 
-  const updateGoal = async (goalData: UpdateGoal) => {
+  const updateGoal = async (goalData: Partial<Goal>) => {
     try {
-      const response = await fetch(`/api/goals/${goalData.id}`, {
+      const response = await fetch(`${API_ENDPOINTS.GOALS}/${goalData.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -80,7 +81,7 @@ export function useGoals() {
 
   const deleteGoal = async (goalId: number) => {
     try {
-      const response = await fetch(`/api/goals/${goalId}`, {
+      const response = await fetch(`${API_ENDPOINTS.GOALS}/${goalId}`, {
         method: 'DELETE',
       });
       

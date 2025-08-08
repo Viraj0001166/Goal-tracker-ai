@@ -1,4 +1,13 @@
 import { useState, useEffect } from 'react';
+import API_ENDPOINTS from '../config/api';
+
+interface FAQ {
+  id: number;
+  question: string;
+  answer: string;
+  category: string;
+  tags: string;
+}
 import Layout from '@/react-app/components/Layout';
 import { Search, BookOpen, ChevronDown, ChevronUp, Filter, Hash } from 'lucide-react';
 
@@ -28,7 +37,7 @@ export default function Questions() {
 
   const fetchFAQs = async () => {
     try {
-      const response = await fetch('/api/faqs');
+      const response = await fetch(API_ENDPOINTS.FAQS);
       const data = await response.json();
       setFaqs(data.faqs || []);
     } catch (error) {

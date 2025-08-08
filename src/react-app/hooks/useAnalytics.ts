@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import API_ENDPOINTS from '../config/api';
 
 interface ProgressData {
   log_date: string;
@@ -7,19 +8,19 @@ interface ProgressData {
   completion_rate: number;
 }
 
-interface GoalStats {
+interface GoalAnalytics {
   id: number;
   title: string;
   category: string;
-  target_frequency: string;
   total_logs: number;
-  completed_count: number;
+  completed_logs: number;
   completion_rate: number;
+  streak: number;
 }
 
 export function useAnalytics(days: number = 30) {
   const [progressData, setProgressData] = useState<ProgressData[]>([]);
-  const [goalStats, setGoalStats] = useState<GoalStats[]>([]);
+  const [goalStats, setGoalStats] = useState<GoalAnalytics[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -28,15 +29,15 @@ export function useAnalytics(days: number = 30) {
       setLoading(true);
       
       // Fetch progress data
-      const progressResponse = await fetch(`/api/analytics/progress?days=${days}`);
+      const progressResponse = await fetch(`${API_ENDPOINTS.ANALYTICS_PROGRESS}?days=${days}`);
       if (!progressResponse.ok) {
         throw new Error('Failed to fetch progress data');
       }
       const progressResult = await progressResponse.json();
       setProgressData(progressResult.progress);
 
-      // Fetch goal statistics
-      const goalsResponse = await fetch('/api/analytics/goals');
+      // Fetch goal analytics
+      const goalsResponse = await fetch(API_ENDPOINTS.ANALYTICS_GOALS);
       if (!goalsResponse.ok) {
         throw new Error('Failed to fetch goal statistics');
       }
